@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="Game.js"></script>
+    <script src="SimpleAI.js"></script>
+</head>
+<body>
+</body>
+</html>
+<script>
+    let testGame = new Game();
+    let redAI = new SimpleAI('red');
+    let blackAI = new SimpleAI('black');
+
+    let currentAI = redAI;
+
+    testGame.setPiece('red', redAI.getNextMove(testGame.board));
+    testGame.setPiece('black', blackAI.getNextMove(testGame.board));
+
+    testGame.setPiece('red', redAI.getNextMove(testGame.board));
+    testGame.setPiece('black', blackAI.getNextMove(testGame.board));
+
+    testGame.setPiece('red', redAI.getNextMove(testGame.board));
+    testGame.setPiece('black', blackAI.getNextMove(testGame.board));
+
+    testGame.setPiece('red', redAI.getNextMove(testGame.board));
+    testGame.setPiece('black', blackAI.getNextMove(testGame.board));
+
+    // console.log('board', testGame.board);
+    let block = 0;
+    while (testGame.gameStatus !== 'Finished' || block === 50) {
+        testGame.setPiece(currentAI.color, currentAI.getNextMove(testGame.board));
+        currentAI = redAI ? currentAI = blackAI : currentAI = redAI;
+        block++;
+    }
+
+    console.log('game over', testGame);
+
+</script>
