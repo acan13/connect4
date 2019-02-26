@@ -1,4 +1,4 @@
-class Game {
+module.exports = class Game {
     constructor(firstMoveColor = "red") {
         let board = [];
         for (let i = 0; i < 7; i++) {
@@ -27,6 +27,7 @@ class Game {
         }
         this.gameStatus = "InPlay";
         this._dropPiece(color, colIndex);
+        this._addMoveToHistory(colIndex);
         this._switchCurrentTurnColor();
         let winner = this._checkForGameWinner();
         if (winner) {
