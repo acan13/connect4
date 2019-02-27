@@ -3,11 +3,14 @@
         <div class="game-status">
             Status: {{ gameStatus }}
         </div>
+        <div class="game-winner" v-if="winner">
+            Winner: {{ winner }}
+        </div>
         <div class="button-wrapper">
             <button @click="resetGame">Reset Game</button>
         </div>
         <div class="play-field">
-            <div class="piece-drop">
+            <div class="piece-drop" v-if="!winner">
                 <div class="drop-slot" v-for="slot of dropSlots" :style="{'background-color': slot}"></div>
             </div>
             <div class="board-wrapper">
@@ -42,6 +45,9 @@ export default {
         gameStatus() {
             return this.game.gameStatus;
         },
+        winner() {
+            return this.game.winner;
+        }
     },
     watch: {
         currentColor(currentColor, pastColor) {
