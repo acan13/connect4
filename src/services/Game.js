@@ -1,4 +1,4 @@
-module.exports = class Game {
+export default class Game {
     constructor(firstMoveColor = "red") {
         let board = [];
         for (let i = 0; i < 7; i++) {
