@@ -24,6 +24,7 @@
 
 <script>
 import Game from '../../services/Game'
+import SimpleAI from '../../services/SimpleAI'
 
 export default {
     components: {
@@ -33,6 +34,7 @@ export default {
         return {
             game: new Game(),
             dropSlots: [],
+            ai: undefined,
         };
     },
     computed: {
@@ -62,16 +64,17 @@ export default {
             this.dropSlots.push(this.dropSlots.shift());
         },
         moveRigth() {
-            console.log('move right');
             this.dropSlots.unshift(this.dropSlots.pop());
         },
         switchColor(currentColor, pastColor) {
             let index = this.dropSlots.indexOf(pastColor);
             this.$set(this.dropSlots, index, currentColor);
         },
-        placePiece() {
-            let index = this.dropSlots.indexOf(this.currentColor);
+        placePiece(index) {
             this.game.setPiece(this.currentColor, index);
+        },
+        getCurrentSlotIndex() {
+            return this.dropSlots.indexOf(this.currentColor);
         },
         handleKeyup(e) {
             if (e.code === "ArrowRight") {
@@ -81,9 +84,17 @@ export default {
                 this.moveLeft();
             }
             if (e.code === "Enter") {
-                this.placePiece();
+                this.placePiece(this.getCurrentSlotIndex());
+                this.makeAIMove();
             }
-        }
+        },
+        makeAIMove() {
+            if (!this.ai) {
+                this.ai = new SimpleAI(this.game.currentTurnColor);
+            }
+            let moveIndex = this.ai.getNextMove(this.gameBoard);
+            this.placePiece(moveIndex);
+        },
     },
     created() {
         this.dropSlots = [this.currentColor, null, null, null, null, null, null];

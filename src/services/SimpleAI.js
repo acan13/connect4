@@ -1,4 +1,4 @@
-module.exports = class SimpleAI {
+ export default class SimpleAI {
     constructor(color) {
         this.color = color;
     }
